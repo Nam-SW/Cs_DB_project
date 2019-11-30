@@ -66,7 +66,6 @@ namespace Cs_DB_project
                 if (reader.Read())
                 {
                     id = reader["아이디"].ToString();
-                    selected_id = id;
                     Login_success();
                 }
                 else
@@ -97,13 +96,18 @@ namespace Cs_DB_project
             login_status.Text = "로그인해야 이용할 수 있습니다.";
         }
 
-        private void showall_Click(object sender, EventArgs e)
+        private void select_all()
         {
             dataAdapter = new MySqlDataAdapter("SELECT * FROM 게시글", conn);
             dataSet = new DataSet();
 
             dataAdapter.Fill(dataSet, "게시글");
             Bulletin.DataSource = dataSet.Tables["게시글"];
+        }
+
+        private void showall_Click(object sender, EventArgs e)
+        {
+            select_all();
         }
 
         private void MyBulletin_Click(object sender, EventArgs e)
@@ -147,11 +151,6 @@ namespace Cs_DB_project
             if (Content.Text == "")
             {
                 MessageBox.Show("내용을 써주세요.");
-                return;
-            }
-            if (selected_id != id)
-            {
-                MessageBox.Show("자신의 게시글만 수정할 수 있습니다.");
                 return;
             }
 
@@ -202,14 +201,43 @@ namespace Cs_DB_project
                 MessageBox.Show("게시글을 선택해주세요.");
                 return;
             }
+            if (selected_id != id)
+            {
+                MessageBox.Show("자신의 게시글만 삭제할 수 있습니다.");
+                return;
+            }
 
+            string query = "DELETE FROM 게시글 where 글번호=@num";
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@num", num);
+            
 
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("글이 삭제되었습니다.");
+                Title.Text = "";
+                Content.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            select_all();
             num = -1;
+            selected_id = "";
         }
 
         private void Bulletin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             num = int.Parse(Bulletin.Rows[e.RowIndex].Cells[0].Value.ToString());
+            selected_id = Bulletin.Rows[e.RowIndex].Cells[1].Value.ToString();
             Title.Text = Bulletin.Rows[e.RowIndex].Cells[2].Value.ToString();
             Content.Text = Bulletin.Rows[e.RowIndex].Cells[4].Value.ToString();
         }
