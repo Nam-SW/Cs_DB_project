@@ -94,6 +94,7 @@ namespace Cs_DB_project
 
             id = "";
             login_status.Text = "로그인해야 이용할 수 있습니다.";
+            select_all();
         }
 
         private void select_all()
@@ -170,6 +171,7 @@ namespace Cs_DB_project
                     dataSet.Clear();
                     dataAdapter.Fill(dataSet, "게시글");
                     Bulletin.DataSource = dataSet.Tables["게시글"];
+                    MessageBox.Show("등록 완료!");
                 }
                 else
                     MessageBox.Show("검색된 데이터가 없습니다.");
@@ -186,7 +188,62 @@ namespace Cs_DB_project
 
         private void Update_Click(object sender, EventArgs e)
         {
+            if (id == "")
+            {
+                MessageBox.Show("로그인해주세요!");
+                return;
+            }
+            if (num == -1)
+            {
+                MessageBox.Show("게시글을 선택해주세요.");
+                return;
+            }
+            if (selected_id != id)
+            {
+                MessageBox.Show("자신의 게시글만 수정할 수 있습니다.");
+                return;
+            }
+            if (Title.Text == "")
+            {
+                MessageBox.Show("제목을 써주세요.");
+                return;
+            }
+            if (Content.Text == "")
+            {
+                MessageBox.Show("내용을 써주세요.");
+                return;
+            }
 
+
+            string query = "UPDATE 게시글 SET 글제목=@title, 글내용=@content WHERE 글번호=@num";
+            dataAdapter.UpdateCommand = new MySqlCommand(query, conn);
+            dataAdapter.UpdateCommand.Parameters.AddWithValue("@title", Title.Text);
+            dataAdapter.UpdateCommand.Parameters.AddWithValue("@content", Content.Text);
+            dataAdapter.UpdateCommand.Parameters.AddWithValue("@num", num);
+
+            try
+            {
+                conn.Open();
+
+                if (dataAdapter.UpdateCommand.ExecuteNonQuery() > 0)  // 검색된 데이터의 행 수 반환
+                {
+                    dataSet.Clear();
+                    dataAdapter.Fill(dataSet, "게시글");
+                    Bulletin.DataSource = dataSet.Tables["게시글"];
+                    MessageBox.Show("수정되었습니다.");
+                }
+                else
+                    MessageBox.Show("수정된 데이터가 없습니다.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                select_all();
+                conn.Close();
+            }
         }
 
         private void Delete_Click(object sender, EventArgs e)
