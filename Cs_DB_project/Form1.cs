@@ -30,11 +30,16 @@ namespace Cs_DB_project
             MyBulletin.Visible = false;
             conn = new MySqlConnection("server=localhost;port=3306;database=hanbitmart;uid=root;pwd=nsw0311");
 
-            dataAdapter = new MySqlDataAdapter("SELECT * FROM 게시글", conn);
-            dataSet = new DataSet();
+            //dataAdapter = new MySqlDataAdapter("SELECT 글번호, 글제목, 아이디, 작성일자, 글내용 FROM 게시글", conn);
+            //dataSet = new DataSet();
 
-            dataAdapter.Fill(dataSet, "게시글");
-            Bulletin.DataSource = dataSet.Tables["게시글"];
+            //dataAdapter.Fill(dataSet, "게시글");
+            //Bulletin.DataSource = dataSet.Tables["게시글"];
+            select_all();
+
+            string[] option_list = { "글제목", "글내용", "아이디" };
+            SearchOption.Items.AddRange(option_list);
+            SearchOption.SelectedIndex = 0;
         }
 
         private void Login_success()
@@ -99,7 +104,7 @@ namespace Cs_DB_project
 
         private void select_all()
         {
-            dataAdapter = new MySqlDataAdapter("SELECT * FROM 게시글", conn);
+            dataAdapter = new MySqlDataAdapter("select 글번호, 글제목, 아이디, 작성일자, 글내용 from 게시글", conn);
             dataSet = new DataSet();
 
             dataAdapter.Fill(dataSet, "게시글");
@@ -113,7 +118,7 @@ namespace Cs_DB_project
 
         private void MyBulletin_Click(object sender, EventArgs e)
         {
-            dataAdapter = new MySqlDataAdapter("SELECT * FROM 게시글 where 아이디=@id", conn);
+            dataAdapter = new MySqlDataAdapter("select 글번호, 글제목, 아이디, 작성일자, 글내용 from 게시글 where 아이디=@id", conn);
             dataAdapter.SelectCommand.Parameters.AddWithValue("@id", id);
 
             dataSet = new DataSet();
@@ -215,7 +220,7 @@ namespace Cs_DB_project
             }
 
 
-            string query = "UPDATE 게시글 SET 글제목=@title, 글내용=@content WHERE 글번호=@num";
+            string query = "update 게시글 set 글제목=@title, 글내용=@content where 글번호=@num";
             dataAdapter.UpdateCommand = new MySqlCommand(query, conn);
             dataAdapter.UpdateCommand.Parameters.AddWithValue("@title", Title.Text);
             dataAdapter.UpdateCommand.Parameters.AddWithValue("@content", Content.Text);
@@ -264,7 +269,7 @@ namespace Cs_DB_project
                 return;
             }
 
-            string query = "DELETE FROM 게시글 where 글번호=@num";
+            string query = "delete from 게시글 where 글번호=@num";
             MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@num", num);
             
@@ -291,12 +296,43 @@ namespace Cs_DB_project
             selected_id = "";
         }
 
+        private void Search_Click(object sender, EventArgs e)
+        {
+            string query = "select 글번호, 글제목, 아이디, 작성일자, 글내용 from 게시글 where " +
+                           SearchOption.SelectedItem.ToString() + 
+                           " like '%" + SearchKey.Text + "%'";
+
+            dataAdapter = new MySqlDataAdapter(query, conn);
+
+            dataSet = new DataSet();
+
+            try
+            {
+                conn.Open();
+                dataSet.Clear();
+                if (dataAdapter.Fill(dataSet, "게시글") > 0)  // 검색된 데이터의 행 수 반환
+                    Bulletin.DataSource = dataSet.Tables["게시글"];
+                else
+                    MessageBox.Show("검색결과가 존재하지 않습니다.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         private void Bulletin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             num = int.Parse(Bulletin.Rows[e.RowIndex].Cells[0].Value.ToString());
-            selected_id = Bulletin.Rows[e.RowIndex].Cells[1].Value.ToString();
-            Title.Text = Bulletin.Rows[e.RowIndex].Cells[2].Value.ToString();
+            selected_id = Bulletin.Rows[e.RowIndex].Cells[2].Value.ToString();
+            Title.Text = Bulletin.Rows[e.RowIndex].Cells[1].Value.ToString();
             Content.Text = Bulletin.Rows[e.RowIndex].Cells[4].Value.ToString();
+
+
         }
     }
 }

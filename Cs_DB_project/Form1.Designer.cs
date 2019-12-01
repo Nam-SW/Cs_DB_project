@@ -46,6 +46,9 @@
             this.Registration = new System.Windows.Forms.Button();
             this.Update = new System.Windows.Forms.Button();
             this.Delete = new System.Windows.Forms.Button();
+            this.SearchOption = new System.Windows.Forms.ComboBox();
+            this.SearchKey = new System.Windows.Forms.TextBox();
+            this.Search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Bulletin)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,13 +56,17 @@
             // 
             this.Bulletin.AllowUserToAddRows = false;
             this.Bulletin.AllowUserToDeleteRows = false;
+            this.Bulletin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Bulletin.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Bulletin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Bulletin.Location = new System.Drawing.Point(12, 380);
             this.Bulletin.Name = "Bulletin";
             this.Bulletin.ReadOnly = true;
             this.Bulletin.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.Bulletin.RowTemplate.Height = 23;
-            this.Bulletin.Size = new System.Drawing.Size(776, 207);
+            this.Bulletin.Size = new System.Drawing.Size(803, 207);
             this.Bulletin.TabIndex = 0;
             this.Bulletin.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Bulletin_CellClick);
             // 
@@ -163,7 +170,7 @@
             // 
             this.l1.AutoSize = true;
             this.l1.Font = new System.Drawing.Font("이순신 돋움체 B", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.l1.Location = new System.Drawing.Point(38, 85);
+            this.l1.Location = new System.Drawing.Point(21, 85);
             this.l1.Name = "l1";
             this.l1.Size = new System.Drawing.Size(57, 19);
             this.l1.TabIndex = 30;
@@ -173,7 +180,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("이순신 돋움체 B", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(38, 117);
+            this.label2.Location = new System.Drawing.Point(21, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 19);
             this.label2.TabIndex = 31;
@@ -182,7 +189,7 @@
             // Title
             // 
             this.Title.Font = new System.Drawing.Font("이순신 돋움체 M", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Title.Location = new System.Drawing.Point(101, 83);
+            this.Title.Location = new System.Drawing.Point(84, 83);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(637, 24);
             this.Title.TabIndex = 32;
@@ -190,7 +197,7 @@
             // Content
             // 
             this.Content.Font = new System.Drawing.Font("이순신 돋움체 M", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Content.Location = new System.Drawing.Point(101, 117);
+            this.Content.Location = new System.Drawing.Point(84, 117);
             this.Content.Name = "Content";
             this.Content.Size = new System.Drawing.Size(637, 228);
             this.Content.TabIndex = 34;
@@ -198,7 +205,7 @@
             // 
             // Registration
             // 
-            this.Registration.Location = new System.Drawing.Point(663, 351);
+            this.Registration.Location = new System.Drawing.Point(727, 84);
             this.Registration.Name = "Registration";
             this.Registration.Size = new System.Drawing.Size(75, 23);
             this.Registration.TabIndex = 35;
@@ -208,7 +215,7 @@
             // 
             // Update
             // 
-            this.Update.Location = new System.Drawing.Point(582, 351);
+            this.Update.Location = new System.Drawing.Point(727, 113);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(75, 23);
             this.Update.TabIndex = 36;
@@ -218,7 +225,7 @@
             // 
             // Delete
             // 
-            this.Delete.Location = new System.Drawing.Point(501, 351);
+            this.Delete.Location = new System.Drawing.Point(727, 142);
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(75, 23);
             this.Delete.TabIndex = 37;
@@ -226,11 +233,40 @@
             this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
             // 
+            // SearchOption
+            // 
+            this.SearchOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SearchOption.FormattingEnabled = true;
+            this.SearchOption.Location = new System.Drawing.Point(504, 352);
+            this.SearchOption.Name = "SearchOption";
+            this.SearchOption.Size = new System.Drawing.Size(89, 20);
+            this.SearchOption.TabIndex = 38;
+            // 
+            // SearchKey
+            // 
+            this.SearchKey.Location = new System.Drawing.Point(599, 352);
+            this.SearchKey.Name = "SearchKey";
+            this.SearchKey.Size = new System.Drawing.Size(135, 21);
+            this.SearchKey.TabIndex = 39;
+            // 
+            // Search
+            // 
+            this.Search.Location = new System.Drawing.Point(740, 352);
+            this.Search.Name = "Search";
+            this.Search.Size = new System.Drawing.Size(75, 23);
+            this.Search.TabIndex = 40;
+            this.Search.Text = "검색";
+            this.Search.UseVisualStyleBackColor = true;
+            this.Search.Click += new System.EventHandler(this.Search_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 599);
+            this.ClientSize = new System.Drawing.Size(827, 599);
+            this.Controls.Add(this.Search);
+            this.Controls.Add(this.SearchKey);
+            this.Controls.Add(this.SearchOption);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.Update);
             this.Controls.Add(this.Registration);
@@ -278,6 +314,9 @@
         private System.Windows.Forms.Button Registration;
         private System.Windows.Forms.Button Update;
         private System.Windows.Forms.Button Delete;
+        private System.Windows.Forms.ComboBox SearchOption;
+        private System.Windows.Forms.TextBox SearchKey;
+        private System.Windows.Forms.Button Search;
     }
 }
 
