@@ -44,12 +44,18 @@
             this.Title = new System.Windows.Forms.TextBox();
             this.Content = new System.Windows.Forms.RichTextBox();
             this.Registration = new System.Windows.Forms.Button();
-            this.Update = new System.Windows.Forms.Button();
+            this.Revise = new System.Windows.Forms.Button();
             this.Delete = new System.Windows.Forms.Button();
             this.SearchOption = new System.Windows.Forms.ComboBox();
             this.SearchKey = new System.Windows.Forms.TextBox();
             this.Search = new System.Windows.Forms.Button();
+            this.reply = new System.Windows.Forms.Label();
+            this.TBreply = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.BTReply = new System.Windows.Forms.Button();
+            this.ReplyList = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.Bulletin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReplyList)).BeginInit();
             this.SuspendLayout();
             // 
             // Bulletin
@@ -61,12 +67,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Bulletin.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Bulletin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Bulletin.Location = new System.Drawing.Point(12, 380);
+            this.Bulletin.Location = new System.Drawing.Point(12, 580);
             this.Bulletin.Name = "Bulletin";
             this.Bulletin.ReadOnly = true;
             this.Bulletin.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.Bulletin.RowTemplate.Height = 23;
-            this.Bulletin.Size = new System.Drawing.Size(803, 207);
+            this.Bulletin.Size = new System.Drawing.Size(803, 170);
             this.Bulletin.TabIndex = 0;
             this.Bulletin.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Bulletin_CellClick);
             // 
@@ -158,7 +164,7 @@
             // 
             // showall
             // 
-            this.showall.Location = new System.Drawing.Point(42, 351);
+            this.showall.Location = new System.Drawing.Point(25, 551);
             this.showall.Name = "showall";
             this.showall.Size = new System.Drawing.Size(91, 23);
             this.showall.TabIndex = 29;
@@ -213,15 +219,15 @@
             this.Registration.UseVisualStyleBackColor = true;
             this.Registration.Click += new System.EventHandler(this.Registration_Click);
             // 
-            // Update
+            // Revise
             // 
-            this.Update.Location = new System.Drawing.Point(727, 113);
-            this.Update.Name = "Update";
-            this.Update.Size = new System.Drawing.Size(75, 23);
-            this.Update.TabIndex = 36;
-            this.Update.Text = "수정";
-            this.Update.UseVisualStyleBackColor = true;
-            this.Update.Click += new System.EventHandler(this.Update_Click);
+            this.Revise.Location = new System.Drawing.Point(727, 113);
+            this.Revise.Name = "Revise";
+            this.Revise.Size = new System.Drawing.Size(75, 23);
+            this.Revise.TabIndex = 36;
+            this.Revise.Text = "수정";
+            this.Revise.UseVisualStyleBackColor = true;
+            this.Revise.Click += new System.EventHandler(this.Revise_Click);
             // 
             // Delete
             // 
@@ -237,21 +243,21 @@
             // 
             this.SearchOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchOption.FormattingEnabled = true;
-            this.SearchOption.Location = new System.Drawing.Point(504, 352);
+            this.SearchOption.Location = new System.Drawing.Point(504, 554);
             this.SearchOption.Name = "SearchOption";
             this.SearchOption.Size = new System.Drawing.Size(89, 20);
             this.SearchOption.TabIndex = 38;
             // 
             // SearchKey
             // 
-            this.SearchKey.Location = new System.Drawing.Point(599, 352);
+            this.SearchKey.Location = new System.Drawing.Point(599, 553);
             this.SearchKey.Name = "SearchKey";
             this.SearchKey.Size = new System.Drawing.Size(135, 21);
             this.SearchKey.TabIndex = 39;
             // 
             // Search
             // 
-            this.Search.Location = new System.Drawing.Point(740, 352);
+            this.Search.Location = new System.Drawing.Point(740, 551);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(75, 23);
             this.Search.TabIndex = 40;
@@ -259,16 +265,77 @@
             this.Search.UseVisualStyleBackColor = true;
             this.Search.Click += new System.EventHandler(this.Search_Click);
             // 
+            // reply
+            // 
+            this.reply.AutoSize = true;
+            this.reply.Font = new System.Drawing.Font("이순신 돋움체 B", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.reply.Location = new System.Drawing.Point(21, 351);
+            this.reply.Name = "reply";
+            this.reply.Size = new System.Drawing.Size(41, 19);
+            this.reply.TabIndex = 42;
+            this.reply.Text = "댓글";
+            // 
+            // TBreply
+            // 
+            this.TBreply.Font = new System.Drawing.Font("이순신 돋움체 M", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.TBreply.Location = new System.Drawing.Point(84, 488);
+            this.TBreply.Name = "TBreply";
+            this.TBreply.Size = new System.Drawing.Size(574, 57);
+            this.TBreply.TabIndex = 43;
+            this.TBreply.Text = "";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("이순신 돋움체 B", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.Location = new System.Drawing.Point(11, 489);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 19);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "댓글작성";
+            // 
+            // BTReply
+            // 
+            this.BTReply.Location = new System.Drawing.Point(659, 488);
+            this.BTReply.Name = "BTReply";
+            this.BTReply.Size = new System.Drawing.Size(62, 57);
+            this.BTReply.TabIndex = 45;
+            this.BTReply.Text = "댓글작성";
+            this.BTReply.UseVisualStyleBackColor = true;
+            this.BTReply.Click += new System.EventHandler(this.BTReply_Click);
+            // 
+            // ReplyList
+            // 
+            this.ReplyList.AllowUserToAddRows = false;
+            this.ReplyList.AllowUserToDeleteRows = false;
+            this.ReplyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReplyList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.ReplyList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ReplyList.Location = new System.Drawing.Point(84, 351);
+            this.ReplyList.Name = "ReplyList";
+            this.ReplyList.ReadOnly = true;
+            this.ReplyList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.ReplyList.RowTemplate.Height = 23;
+            this.ReplyList.Size = new System.Drawing.Size(637, 131);
+            this.ReplyList.TabIndex = 46;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 599);
+            this.ClientSize = new System.Drawing.Size(827, 762);
+            this.Controls.Add(this.ReplyList);
+            this.Controls.Add(this.BTReply);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TBreply);
+            this.Controls.Add(this.reply);
             this.Controls.Add(this.Search);
             this.Controls.Add(this.SearchKey);
             this.Controls.Add(this.SearchOption);
             this.Controls.Add(this.Delete);
-            this.Controls.Add(this.Update);
+            this.Controls.Add(this.Revise);
             this.Controls.Add(this.Registration);
             this.Controls.Add(this.Content);
             this.Controls.Add(this.Title);
@@ -289,6 +356,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Bulletin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReplyList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,11 +380,16 @@
         private System.Windows.Forms.TextBox Title;
         private System.Windows.Forms.RichTextBox Content;
         private System.Windows.Forms.Button Registration;
-        private System.Windows.Forms.Button Update;
+        private System.Windows.Forms.Button Revise;
         private System.Windows.Forms.Button Delete;
         private System.Windows.Forms.ComboBox SearchOption;
         private System.Windows.Forms.TextBox SearchKey;
         private System.Windows.Forms.Button Search;
+        private System.Windows.Forms.Label reply;
+        private System.Windows.Forms.RichTextBox TBreply;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button BTReply;
+        private System.Windows.Forms.DataGridView ReplyList;
     }
 }
 

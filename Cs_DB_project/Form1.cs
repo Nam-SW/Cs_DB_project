@@ -40,6 +40,7 @@ namespace Cs_DB_project
             string[] option_list = { "글제목", "글내용", "아이디" };
             SearchOption.Items.AddRange(option_list);
             SearchOption.SelectedIndex = 0;
+            
         }
 
         private void Login_success()
@@ -109,6 +110,12 @@ namespace Cs_DB_project
 
             dataAdapter.Fill(dataSet, "게시글");
             Bulletin.DataSource = dataSet.Tables["게시글"];
+
+            dataAdapter = new MySqlDataAdapter("select 작성자, 작성일, 작성내용 from 댓글 where 글번호=0", conn);
+            dataSet = new DataSet();
+
+            dataAdapter.Fill(dataSet, "댓글");
+            ReplyList.DataSource = dataSet.Tables["댓글"];
         }
 
         private void showall_Click(object sender, EventArgs e)
@@ -191,7 +198,7 @@ namespace Cs_DB_project
             }
         }
 
-        private void Update_Click(object sender, EventArgs e)
+        private void Revise_Click(object sender, EventArgs e)
         {
             if (id == "")
             {
@@ -325,6 +332,53 @@ namespace Cs_DB_project
             }
         }
 
+        private void BTReply_Click(object sender, EventArgs e)
+        {
+            if (id == "")
+            {
+                MessageBox.Show("로그인해주세요!");
+                return;
+            }
+            if (num == -1)
+            {
+                MessageBox.Show("게시글을 선택해주세요.");
+                return;
+            }
+            if (TBreply.Text == "")
+            {
+                MessageBox.Show("내용을 써주세요.");
+                return;
+            }
+
+            string sql = "insert into 댓글 values(" + num.ToString() + ", @id, @date, @content);";
+            dataAdapter.InsertCommand = new MySqlCommand(sql, conn);
+            dataAdapter.InsertCommand.Parameters.AddWithValue("@id", id);
+            dataAdapter.InsertCommand.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
+            dataAdapter.InsertCommand.Parameters.AddWithValue("@content", TBreply.Text);
+
+            try
+            {
+                conn.Open();
+
+                if (dataAdapter.InsertCommand.ExecuteNonQuery() > 0)
+                {
+                    dataSet.Clear();
+                    dataAdapter.Fill(dataSet, "댓글");
+                    ReplyList.DataSource = dataSet.Tables["댓글"];
+                }
+                else
+                    MessageBox.Show("검색된 데이터가 없습니다.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         private void Bulletin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             num = int.Parse(Bulletin.Rows[e.RowIndex].Cells[0].Value.ToString());
@@ -332,7 +386,11 @@ namespace Cs_DB_project
             Title.Text = Bulletin.Rows[e.RowIndex].Cells[1].Value.ToString();
             Content.Text = Bulletin.Rows[e.RowIndex].Cells[4].Value.ToString();
 
+            dataAdapter = new MySqlDataAdapter("select 작성자, 작성일, 작성내용 from 댓글 where 글번호=" + num.ToString(), conn);
+            dataSet = new DataSet();
 
+            dataAdapter.Fill(dataSet, "댓글");
+            ReplyList.DataSource = dataSet.Tables["댓글"];
         }
     }
 }
